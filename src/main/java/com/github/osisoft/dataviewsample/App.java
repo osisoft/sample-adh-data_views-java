@@ -300,13 +300,13 @@ public class App {
             System.out.println("Step 14: Delete sample objects from OCS");
             try {
                 System.out.println("Deleting data view...");
-                // ocsClient.DataViews.deleteDataView(namespaceId, sampleDataViewId);
+                ocsClient.DataViews.deleteDataView(namespaceId, sampleDataViewId);
             } catch (Exception e) {
                 e.printStackTrace();
                 success = false;
             }
             if (needData) {
-                // cleanUp(ocsClient);
+                cleanUp(ocsClient);
             }
         }
         return success;
