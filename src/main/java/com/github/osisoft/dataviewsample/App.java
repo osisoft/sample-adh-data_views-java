@@ -145,11 +145,17 @@ public class App {
             availableFields = ocsClient.DataViews.getAvailableFieldSets(namespaceId, sampleDataViewId);
             System.out.println(ocsClient.mGson.toJson(availableFields));
 
-            System.out.println("Retrieving data from the data view:");
-            String dataViewData = ocsClient.DataViews.getDataViewData(namespaceId, sampleDataViewId,
+            System.out.println("Retrieving interpolated data from the data view:");
+            String dataViewInterpData = ocsClient.DataViews.getDataViewInterpolatedData(namespaceId, sampleDataViewId,
                     sampleStartTime.toString(), sampleEndTime.toString(), sampleInterval).getResponse();
-            System.out.println(dataViewData);
-            assert dataViewData.length() > 0 : "Error getting data view data";
+            System.out.println(dataViewInterpData);
+            assert dataViewInterpData.length() > 0 : "Error getting data view interpolated data";
+
+            System.out.println("Retrieving stored data from the data view:");
+            String dataViewStoredData = ocsClient.DataViews.getDataViewStoredData(namespaceId, sampleDataViewId,
+                    sampleStartTime.toString(), sampleEndTime.toString()).getResponse();
+            System.out.println(dataViewStoredData);
+            assert dataViewStoredData.length() > 0 : "Error getting data view stored data";
 
             // Step 9
             System.out.println();
@@ -158,11 +164,17 @@ public class App {
             dataView.setGroupingFields(new Field[] { grouping });
             ocsClient.DataViews.createOrUpdateDataView(namespaceId, dataView);
 
-            System.out.println("Retrieving data from the data view:");
-            dataViewData = ocsClient.DataViews.getDataViewData(namespaceId, sampleDataViewId,
+            System.out.println("Retrieving interpolated data from the data view:");
+            dataViewInterpData = ocsClient.DataViews.getDataViewInterpolatedData(namespaceId, sampleDataViewId,
                     sampleStartTime.toString(), sampleEndTime.toString(), sampleInterval).getResponse();
-            System.out.println(dataViewData);
-            assert dataViewData.length() > 0 : "Error getting data view data";
+            System.out.println(dataViewInterpData);
+            assert dataViewInterpData.length() > 0 : "Error getting data view interpolated data";
+
+            System.out.println("Retrieving stored data from the data view:");
+            dataViewStoredData = ocsClient.DataViews.getDataViewStoredData(namespaceId, sampleDataViewId,
+                    sampleStartTime.toString(), sampleEndTime.toString()).getResponse();
+            System.out.println(dataViewStoredData);
+            assert dataViewStoredData.length() > 0 : "Error getting data view stored data";
 
             // Step 10
             System.out.println();
@@ -173,11 +185,17 @@ public class App {
             dataView.setGroupingFields(new Field[0]);
             ocsClient.DataViews.createOrUpdateDataView(namespaceId, dataView);
 
-            System.out.println("Retrieving data from the data view:");
-            dataViewData = ocsClient.DataViews.getDataViewData(namespaceId, sampleDataViewId,
+            System.out.println("Retrieving interpolated data from the data view:");
+            dataViewInterpData = ocsClient.DataViews.getDataViewInterpolatedData(namespaceId, sampleDataViewId,
                     sampleStartTime.toString(), sampleEndTime.toString(), sampleInterval).getResponse();
-            System.out.println(dataViewData);
-            assert dataViewData.length() > 0 : "Error getting data view data";
+            System.out.println(dataViewInterpData);
+            assert dataViewInterpData.length() > 0 : "Error getting data view interpolated data";
+
+            System.out.println("Retrieving stored data from the data view:");
+            dataViewStoredData = ocsClient.DataViews.getDataViewStoredData(namespaceId, sampleDataViewId,
+                    sampleStartTime.toString(), sampleEndTime.toString()).getResponse();
+            System.out.println(dataViewStoredData);
+            assert dataViewStoredData.length() > 0 : "Error getting data view stored data";
 
             // Step 11
             System.out.println();
@@ -198,11 +216,17 @@ public class App {
             dvDataItemFieldSet.setDataFields(Arrays.copyOf(fields.toArray(), fields.size(), Field[].class));
             ocsClient.DataViews.createOrUpdateDataView(namespaceId, dataView);
 
-            System.out.println("Retrieving data from the data view:");
-            dataViewData = ocsClient.DataViews.getDataViewData(namespaceId, sampleDataViewId,
+            System.out.println("Retrieving interpolated data from the data view:");
+            dataViewInterpData = ocsClient.DataViews.getDataViewInterpolatedData(namespaceId, sampleDataViewId,
                     sampleStartTime.toString(), sampleEndTime.toString(), sampleInterval).getResponse();
-            System.out.println(dataViewData);
-            assert dataViewData.length() > 0 : "Error getting data view data";
+            System.out.println(dataViewInterpData);
+            assert dataViewInterpData.length() > 0 : "Error getting data view interpolated data";
+
+            System.out.println("Retrieving stored data from the data view:");
+            dataViewStoredData = ocsClient.DataViews.getDataViewStoredData(namespaceId, sampleDataViewId,
+                    sampleStartTime.toString(), sampleEndTime.toString()).getResponse();
+            System.out.println(dataViewStoredData);
+            assert dataViewStoredData.length() > 0 : "Error getting data view stored data";
 
             // Step 12
             System.out.println();
@@ -220,11 +244,17 @@ public class App {
             field2.setIncludeUom(true);
             ocsClient.DataViews.createOrUpdateDataView(namespaceId, dataView);
 
-            System.out.println("Retrieving data from the data view:");
-            dataViewData = ocsClient.DataViews.getDataViewData(namespaceId, sampleDataViewId,
+            System.out.println("Retrieving interpolated data from the data view:");
+            dataViewInterpData = ocsClient.DataViews.getDataViewInterpolatedData(namespaceId, sampleDataViewId,
                     sampleStartTime.toString(), sampleEndTime.toString(), sampleInterval).getResponse();
-            System.out.println(dataViewData);
-            assert dataViewData.length() > 0 : "Error getting data view data";
+            System.out.println(dataViewInterpData);
+            assert dataViewInterpData.length() > 0 : "Error getting data view interpolated data";
+
+            System.out.println("Retrieving stored data from the data view:");
+            dataViewStoredData = ocsClient.DataViews.getDataViewStoredData(namespaceId, sampleDataViewId,
+                    sampleStartTime.toString(), sampleEndTime.toString()).getResponse();
+            System.out.println(dataViewStoredData);
+            assert dataViewStoredData.length() > 0 : "Error getting data view stored data";
 
             // Step 13
             System.out.println();
@@ -249,11 +279,17 @@ public class App {
             ocsClient.DataViews.createOrUpdateDataView(namespaceId, dataView);
             ocsClient.DataViews.createOrUpdateDataView(namespaceId, dataView);
 
-            System.out.println("Retrieving data from the data view:");
-            dataViewData = ocsClient.DataViews.getDataViewData(namespaceId, sampleDataViewId,
+            System.out.println("Retrieving interpolated data from the data view:");
+            dataViewInterpData = ocsClient.DataViews.getDataViewInterpolatedData(namespaceId, sampleDataViewId,
                     sampleStartTime.toString(), sampleEndTime.toString(), sampleInterval).getResponse();
-            System.out.println(dataViewData);
-            assert dataViewData.length() > 0 : "Error getting data view data";
+            System.out.println(dataViewInterpData);
+            assert dataViewInterpData.length() > 0 : "Error getting data view interpolated data";
+
+            System.out.println("Retrieving stored data from the data view:");
+            dataViewStoredData = ocsClient.DataViews.getDataViewStoredData(namespaceId, sampleDataViewId,
+                    sampleStartTime.toString(), sampleEndTime.toString()).getResponse();
+            System.out.println(dataViewStoredData);
+            assert dataViewStoredData.length() > 0 : "Error getting data view stored data";
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -264,13 +300,13 @@ public class App {
             System.out.println("Step 14: Delete sample objects from OCS");
             try {
                 System.out.println("Deleting data view...");
-                ocsClient.DataViews.deleteDataView(namespaceId, sampleDataViewId);
+                // ocsClient.DataViews.deleteDataView(namespaceId, sampleDataViewId);
             } catch (Exception e) {
                 e.printStackTrace();
                 success = false;
             }
             if (needData) {
-                cleanUp(ocsClient);
+                // cleanUp(ocsClient);
             }
         }
         return success;
