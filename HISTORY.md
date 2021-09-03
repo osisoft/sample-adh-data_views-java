@@ -1,5 +1,11 @@
 # Version History
 
+## 1.2.0 / 2021-09-03
+
+- Added stored value retrieval data calls
+- Updated dependencies
+- Cleaned up gitignore
+
 ## 1.1.2 / 2021-07-06
 
 - Updated dependencies
