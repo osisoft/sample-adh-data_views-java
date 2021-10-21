@@ -1,6 +1,6 @@
 # Using OCS Data Views in Java
 
-**Version:** 1.2.0
+**Version:** 1.2.1
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-data_views-java?repoName=osisoft%2Fsample-ocs-data_views-java&branchName=main)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2617&repoName=osisoft%2Fsample-ocs-data_views-java&branchName=main)
 
@@ -23,6 +23,6 @@ The sample code in this demonstrates how to invoke Data View REST APIs via the s
 
 Tested against Maven 3.6.3 and Java Runtime Environment 11.
 
-For the main OCS data view samples page [ReadMe](https://github.com/osisoft/OSI-Samples-OCS/blob/main/docs/DATA_VIEWS_README.md)  
+For the main OCS data view samples page [ReadMe](https://github.com/osisoft/OSI-Samples-OCS/blob/main/docs/DATA_VIEWS.md)  
 For the main OCS samples page [ReadMe](https://github.com/osisoft/OSI-Samples-OCS)  
 For the main OSIsoft samples page [ReadMe](https://github.com/osisoft/OSI-Samples)
