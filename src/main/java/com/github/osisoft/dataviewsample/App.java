@@ -1,5 +1,6 @@
 package com.github.osisoft.dataviewsample;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.Arrays;
@@ -7,15 +8,19 @@ import java.util.ArrayList;
 import java.util.Properties;
 import java.time.*;
 
+import com.google.gson.Gson;
+
 import com.github.osisoft.ocs_sample_library_preview.*;
 import com.github.osisoft.ocs_sample_library_preview.sds.*;
 import com.github.osisoft.ocs_sample_library_preview.dataviews.*;
 
 public class App {
+    // get appsettings
+    static Appsettings appsettings = getAppsettings();
+
     // Get Configuration
-    static String tenantId = getConfiguration("tenantId");
-    static String namespaceId = getConfiguration("namespaceId");
-    static String ocsServerUrl = getConfiguration("ocsServerUrl");
+    static String tenantId = appsettings.getTenantId();
+    static String namespaceId = appsettings.getNamespaceId();
 
     // Sample Data Information
     static String sampleTypeId1 = "Time_SampleType1";
@@ -87,7 +92,11 @@ public class App {
         // Step 1
         System.out.println();
         System.out.println("Step 1: Authenticate against OCS");
-        OCSClient ocsClient = new OCSClient();
+        OCSClient ocsClient = new OCSClient(appsettings.getApiVersion(), 
+                                            appsettings.getTenantId(), 
+                                            appsettings.getClientId(), 
+                                            appsettings.getClientSecret(), 
+                                            appsettings.getResource());
 
         try {
             // Step 2
@@ -382,20 +391,29 @@ public class App {
         System.out.println("======= End of " + exceptionDescription + " =======");
     }
 
-    private static String getConfiguration(String propertyId) {
-        String property = "";
-        Properties props = new Properties();
+    private static Appsettings getAppsettings() {
+        Gson mGson = new Gson();
 
-        try (InputStream inputStream = new FileInputStream("config.properties")) {
-            // if launching from git folder use this:
-            // "\\basic_samples\\DataViews\\JAVA\\config.properties");
-            props.load(inputStream);
-            property = props.getProperty(propertyId);
+        Appsettings appsettings = new Appsettings();
+        System.out.println(new File(".").getAbsolutePath());
+
+        try (InputStream inputStream = new FileInputStream("appsettings.json")) {
+            String fileString = null;
+            int bytesToRead = inputStream.available();
+
+            if (bytesToRead > 0) {
+                byte[] bytes = new byte[bytesToRead];
+                inputStream.read(bytes);
+                fileString = new String(bytes);
+            }
+
+            appsettings = mGson.fromJson(fileString, Appsettings.class);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return property;
+        return appsettings;
     }
 
     public static void cleanUp(OCSClient ocsClient) {
