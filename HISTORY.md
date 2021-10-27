@@ -1,5 +1,10 @@
 # Version History
 
+## 1.2.1 / 2021-10-29
+
+- Update pipelines to use Azure Key Vault for secrets
+- Changed config.properties appsettings.json
+
 ## 1.2.0 / 2021-09-03
 
 - Added stored value retrieval data calls

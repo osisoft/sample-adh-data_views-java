@@ -1,6 +1,6 @@
 # Using OCS Data Views in Java
 
-**Version:** 1.2.0
+**Version:** 1.2.1
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-data_views-java?repoName=osisoft%2Fsample-ocs-data_views-java&branchName=main)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2617&repoName=osisoft%2Fsample-ocs-data_views-java&branchName=main)
 
@@ -10,9 +10,9 @@ The sample code in this demonstrates how to invoke Data View REST APIs via the s
 
 1. Clone a local copy of this GitHub repository.
 1. Install the [Java Client Library](https://github.com/osisoft/sample-ocs-sample_libraries-java) (see its [readme](https://github.com/osisoft/sample-ocs-sample_libraries-java) for instructions)
-1. The sample is configured using the file [config.placeholder.properties](config.placeholder.properties). Before editing, rename this file to `config.properties`.
+1. The sample is configured using the file [appsettings.placeholder.json](appsettings.placeholder.json). Before editing, rename this file to `appsettings.json`.
    - This repository's `.gitignore` rules should prevent the file from ever being checked in to any fork or branch, to ensure credentials are not compromised.
-1. Replace the configuration strings in `config.properties`
+1. Replace the configuration strings in `appsettings.json`
 1. Build and run the project.
    1. `cd` to your project location.
    1. run `mvn package exec:java` on cmd.
