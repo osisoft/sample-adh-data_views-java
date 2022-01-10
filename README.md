@@ -1,6 +1,6 @@
 # Using OCS Data Views in Java
 
-**Version:** 1.2.2
+**Version:** 1.2.3
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-data_views-java?repoName=osisoft%2Fsample-ocs-data_views-java&branchName=main)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2617&repoName=osisoft%2Fsample-ocs-data_views-java&branchName=main)
 
