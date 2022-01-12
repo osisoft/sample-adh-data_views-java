@@ -1,5 +1,9 @@
 # Version History
 
+## 1.2.4 / 2022-01-13
+
+- Resolved Polaris scan finding
+
 ## 1.2.3 / 2021-12-07
 
 - Update pipelines to reference internal analysis templates
