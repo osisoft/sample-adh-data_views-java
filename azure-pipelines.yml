@@ -40,7 +40,7 @@ variables:
 jobs:
   - job: Tests
     strategy:
-      maxParallel: 1 # Avoid conflicts in OCS
+      maxParallel: 1 # Avoid conflicts in ADH
       matrix:
         linux:
           agentOS: Linux
@@ -57,7 +57,7 @@ jobs:
 
       - template: '/miscellaneous/build_templates/appsettings.yml@templates'
         parameters:
-          secrets: 'TenantId, NamespaceId, ClientId, ClientSecret'
+          secrets: 'TenantId, NamespaceId, ClientId, ClientSecret, Resource'
 
       - task: JavaToolInstaller@0
         inputs:
