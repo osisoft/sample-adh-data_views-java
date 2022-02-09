@@ -91,8 +91,8 @@ public class App {
 
         // Step 1
         System.out.println();
-        System.out.println("Step 1: Authenticate against OCS");
-        OCSClient ocsClient = new OCSClient(appsettings.getApiVersion(), 
+        System.out.println("Step 1: Authenticate against ADH");
+        ADHClient adhClient = new ADHClient(appsettings.getApiVersion(), 
                                             appsettings.getTenantId(), 
                                             appsettings.getClientId(), 
                                             appsettings.getClientSecret(), 
@@ -103,65 +103,65 @@ public class App {
             System.out.println();
             System.out.println("Step 2: Create types, streams, and data");
             if (needData) {
-                createData(ocsClient);
+                createData(adhClient);
             }
 
             // Step 3
             System.out.println();
             System.out.println("Step 3: Create a data view");
             DataView dataView = new DataView(sampleDataViewId, sampleDataViewName, sampleDataViewDescription);
-            ocsClient.DataViews.createOrUpdateDataView(namespaceId, dataView);
+            adhClient.DataViews.createOrUpdateDataView(namespaceId, dataView);
 
             // Step 4
             System.out.println();
             System.out.println("Step 4: Retrieve the data view");
-            dataView = ocsClient.DataViews.getDataView(namespaceId, sampleDataViewId);
-            System.out.println(ocsClient.mGson.toJson(dataView));
+            dataView = adhClient.DataViews.getDataView(namespaceId, sampleDataViewId);
+            System.out.println(adhClient.mGson.toJson(dataView));
 
             // Step 5
             System.out.println();
             System.out.println("Step 5: Add a query for data items");
             Query query = new Query(sampleQueryId, sampleQueryString);
             dataView.setQueries(new Query[] { query });
-            ocsClient.DataViews.createOrUpdateDataView(namespaceId, dataView);
+            adhClient.DataViews.createOrUpdateDataView(namespaceId, dataView);
 
             // Step 6
             System.out.println();
             System.out.println("Step 6: View items found by the query");
             System.out.println("List data items found by the query:");
-            ResolvedItems<DataItem> dataItems = ocsClient.DataViews.getDataItemsByQuery(namespaceId, sampleDataViewId,
+            ResolvedItems<DataItem> dataItems = adhClient.DataViews.getDataItemsByQuery(namespaceId, sampleDataViewId,
                     sampleQueryId);
-            System.out.println(ocsClient.mGson.toJson(dataItems));
+            System.out.println(adhClient.mGson.toJson(dataItems));
 
             System.out.println("List ineligible data items found by the query:");
-            dataItems = ocsClient.DataViews.getIneligibleDataItemsByQuery(namespaceId, sampleDataViewId, sampleQueryId);
-            System.out.println(ocsClient.mGson.toJson(dataItems));
+            dataItems = adhClient.DataViews.getIneligibleDataItemsByQuery(namespaceId, sampleDataViewId, sampleQueryId);
+            System.out.println(adhClient.mGson.toJson(dataItems));
 
             // Step 7
             System.out.println();
             System.out.println("Step 7: View fields available to include in the data view");
-            ResolvedItems<FieldSet> availableFields = ocsClient.DataViews.getAvailableFieldSets(namespaceId,
+            ResolvedItems<FieldSet> availableFields = adhClient.DataViews.getAvailableFieldSets(namespaceId,
                     sampleDataViewId);
-            System.out.println(ocsClient.mGson.toJson(availableFields));
+            System.out.println(adhClient.mGson.toJson(availableFields));
 
             // Step 8
             System.out.println();
             System.out.println("Step 8: Include some of the available fields");
             dataView.setDataFieldSets(availableFields.getItems());
-            ocsClient.DataViews.createOrUpdateDataView(namespaceId, dataView);
+            adhClient.DataViews.createOrUpdateDataView(namespaceId, dataView);
 
             System.out.println("List available field sets:");
-            availableFields = ocsClient.DataViews.getAvailableFieldSets(namespaceId, sampleDataViewId);
-            System.out.println(ocsClient.mGson.toJson(availableFields));
+            availableFields = adhClient.DataViews.getAvailableFieldSets(namespaceId, sampleDataViewId);
+            System.out.println(adhClient.mGson.toJson(availableFields));
 
             System.out.println("Retrieving interpolated data from the data view:");
-            String dataViewInterpData = ocsClient.DataViews.getDataViewInterpolatedData(namespaceId, sampleDataViewId,
+            String dataViewInterpData = adhClient.DataViews.getDataViewInterpolatedData(namespaceId, sampleDataViewId,
                     sampleStartTime.toString(), sampleEndTime.toString(), sampleInterval).getResponse();
             System.out.println(dataViewInterpData);
             assert dataViewInterpData.length() > 0 : "Error getting data view interpolated data";
 
             System.out.println("Retrieving stored data from the data view:");
-            String dataViewStoredData = ocsClient.DataViews.getDataViewStoredData(namespaceId, sampleDataViewId,
+            String dataViewStoredData = adhClient.DataViews.getDataViewStoredData(namespaceId, sampleDataViewId,
                     sampleStartTime.toString(), sampleEndTime.toString()).getResponse();
             System.out.println(dataViewStoredData);
             assert dataViewStoredData.length() > 0 : "Error getting data view stored data";
@@ -171,16 +171,16 @@ public class App {
             System.out.println("Step 9: Group the data view");
             Field grouping = new Field(FieldSource.Id, null, "{DistinguisherValue} {FirstKey}");
             dataView.setGroupingFields(new Field[] { grouping });
-            ocsClient.DataViews.createOrUpdateDataView(namespaceId, dataView);
+            adhClient.DataViews.createOrUpdateDataView(namespaceId, dataView);
 
             System.out.println("Retrieving interpolated data from the data view:");
-            dataViewInterpData = ocsClient.DataViews.getDataViewInterpolatedData(namespaceId, sampleDataViewId,
+            dataViewInterpData = adhClient.DataViews.getDataViewInterpolatedData(namespaceId, sampleDataViewId,
                     sampleStartTime.toString(), sampleEndTime.toString(), sampleInterval).getResponse();
             System.out.println(dataViewInterpData);
             assert dataViewInterpData.length() > 0 : "Error getting data view interpolated data";
 
             System.out.println("Retrieving stored data from the data view:");
-            dataViewStoredData = ocsClient.DataViews.getDataViewStoredData(namespaceId, sampleDataViewId,
+            dataViewStoredData = adhClient.DataViews.getDataViewStoredData(namespaceId, sampleDataViewId,
                     sampleStartTime.toString(), sampleEndTime.toString()).getResponse();
             System.out.println(dataViewStoredData);
             assert dataViewStoredData.length() > 0 : "Error getting data view stored data";
@@ -192,16 +192,16 @@ public class App {
             assert dvDataItemFieldSet != null : "Error finding field set";
             dvDataItemFieldSet.setIdentifyingField(dataView.getGroupingFields()[0]);
             dataView.setGroupingFields(new Field[0]);
-            ocsClient.DataViews.createOrUpdateDataView(namespaceId, dataView);
+            adhClient.DataViews.createOrUpdateDataView(namespaceId, dataView);
 
             System.out.println("Retrieving interpolated data from the data view:");
-            dataViewInterpData = ocsClient.DataViews.getDataViewInterpolatedData(namespaceId, sampleDataViewId,
+            dataViewInterpData = adhClient.DataViews.getDataViewInterpolatedData(namespaceId, sampleDataViewId,
                     sampleStartTime.toString(), sampleEndTime.toString(), sampleInterval).getResponse();
             System.out.println(dataViewInterpData);
             assert dataViewInterpData.length() > 0 : "Error getting data view interpolated data";
 
             System.out.println("Retrieving stored data from the data view:");
-            dataViewStoredData = ocsClient.DataViews.getDataViewStoredData(namespaceId, sampleDataViewId,
+            dataViewStoredData = adhClient.DataViews.getDataViewStoredData(namespaceId, sampleDataViewId,
                     sampleStartTime.toString(), sampleEndTime.toString()).getResponse();
             System.out.println(dataViewStoredData);
             assert dataViewStoredData.length() > 0 : "Error getting data view stored data";
@@ -215,24 +215,24 @@ public class App {
                     sampleFieldToConsolidate);
             assert field1 != null : "Error finding data field";
             assert field2 != null : "Error finding data field";
-            System.out.println(ocsClient.mGson.toJson(field1));
-            System.out.println(ocsClient.mGson.toJson(field2));
+            System.out.println(adhClient.mGson.toJson(field1));
+            System.out.println(adhClient.mGson.toJson(field2));
             ArrayList<String> keys = new ArrayList<String>(Arrays.asList(field1.getKeys()));
             keys.add(sampleFieldToConsolidate);
             field1.setKeys(Arrays.copyOf(keys.toArray(), keys.size(), String[].class));
             ArrayList<Field> fields = new ArrayList<Field>(Arrays.asList(dvDataItemFieldSet.getDataFields()));
             fields.remove(field2);
             dvDataItemFieldSet.setDataFields(Arrays.copyOf(fields.toArray(), fields.size(), Field[].class));
-            ocsClient.DataViews.createOrUpdateDataView(namespaceId, dataView);
+            adhClient.DataViews.createOrUpdateDataView(namespaceId, dataView);
 
             System.out.println("Retrieving interpolated data from the data view:");
-            dataViewInterpData = ocsClient.DataViews.getDataViewInterpolatedData(namespaceId, sampleDataViewId,
+            dataViewInterpData = adhClient.DataViews.getDataViewInterpolatedData(namespaceId, sampleDataViewId,
                     sampleStartTime.toString(), sampleEndTime.toString(), sampleInterval).getResponse();
             System.out.println(dataViewInterpData);
             assert dataViewInterpData.length() > 0 : "Error getting data view interpolated data";
 
             System.out.println("Retrieving stored data from the data view:");
-            dataViewStoredData = ocsClient.DataViews.getDataViewStoredData(namespaceId, sampleDataViewId,
+            dataViewStoredData = adhClient.DataViews.getDataViewStoredData(namespaceId, sampleDataViewId,
                     sampleStartTime.toString(), sampleEndTime.toString()).getResponse();
             System.out.println(dataViewStoredData);
             assert dataViewStoredData.length() > 0 : "Error getting data view stored data";
@@ -246,21 +246,21 @@ public class App {
                     sampleFieldToAddUom2);
             assert field1 != null : "Error finding data field";
             assert field2 != null : "Error finding data field";
-            System.out.println(ocsClient.mGson.toJson(field1));
-            System.out.println(ocsClient.mGson.toJson(field2));
+            System.out.println(adhClient.mGson.toJson(field1));
+            System.out.println(adhClient.mGson.toJson(field2));
 
             field1.setIncludeUom(true);
             field2.setIncludeUom(true);
-            ocsClient.DataViews.createOrUpdateDataView(namespaceId, dataView);
+            adhClient.DataViews.createOrUpdateDataView(namespaceId, dataView);
 
             System.out.println("Retrieving interpolated data from the data view:");
-            dataViewInterpData = ocsClient.DataViews.getDataViewInterpolatedData(namespaceId, sampleDataViewId,
+            dataViewInterpData = adhClient.DataViews.getDataViewInterpolatedData(namespaceId, sampleDataViewId,
                     sampleStartTime.toString(), sampleEndTime.toString(), sampleInterval).getResponse();
             System.out.println(dataViewInterpData);
             assert dataViewInterpData.length() > 0 : "Error getting data view interpolated data";
 
             System.out.println("Retrieving stored data from the data view:");
-            dataViewStoredData = ocsClient.DataViews.getDataViewStoredData(namespaceId, sampleDataViewId,
+            dataViewStoredData = adhClient.DataViews.getDataViewStoredData(namespaceId, sampleDataViewId,
                     sampleStartTime.toString(), sampleEndTime.toString()).getResponse();
             System.out.println(dataViewStoredData);
             assert dataViewStoredData.length() > 0 : "Error getting data view stored data";
@@ -271,7 +271,7 @@ public class App {
             field1 = findField(dvDataItemFieldSet.getDataFields(), FieldSource.PropertyId,
                     sampleFieldToSummarize);
             assert field1 != null : "Error finding data field";
-            System.out.println(ocsClient.mGson.toJson(field1));
+            System.out.println(adhClient.mGson.toJson(field1));
 
             Field summaryField1 = new Field(field1);
             Field summaryField2 = new Field(field1);
@@ -285,17 +285,17 @@ public class App {
             fields.add(summaryField1);
             fields.add(summaryField2);
             dvDataItemFieldSet.setDataFields(Arrays.copyOf(fields.toArray(), fields.size(), Field[].class));
-            ocsClient.DataViews.createOrUpdateDataView(namespaceId, dataView);
-            ocsClient.DataViews.createOrUpdateDataView(namespaceId, dataView);
+            adhClient.DataViews.createOrUpdateDataView(namespaceId, dataView);
+            adhClient.DataViews.createOrUpdateDataView(namespaceId, dataView);
 
             System.out.println("Retrieving interpolated data from the data view:");
-            dataViewInterpData = ocsClient.DataViews.getDataViewInterpolatedData(namespaceId, sampleDataViewId,
+            dataViewInterpData = adhClient.DataViews.getDataViewInterpolatedData(namespaceId, sampleDataViewId,
                     sampleStartTime.toString(), sampleEndTime.toString(), sampleInterval).getResponse();
             System.out.println(dataViewInterpData);
             assert dataViewInterpData.length() > 0 : "Error getting data view interpolated data";
 
             System.out.println("Retrieving stored data from the data view:");
-            dataViewStoredData = ocsClient.DataViews.getDataViewStoredData(namespaceId, sampleDataViewId,
+            dataViewStoredData = adhClient.DataViews.getDataViewStoredData(namespaceId, sampleDataViewId,
                     sampleStartTime.toString(), sampleEndTime.toString()).getResponse();
             System.out.println(dataViewStoredData);
             assert dataViewStoredData.length() > 0 : "Error getting data view stored data";
@@ -306,22 +306,22 @@ public class App {
         } finally {
             // Step 14
             System.out.println();
-            System.out.println("Step 14: Delete sample objects from OCS");
+            System.out.println("Step 14: Delete sample objects from ADH");
             try {
                 System.out.println("Deleting data view...");
-                ocsClient.DataViews.deleteDataView(namespaceId, sampleDataViewId);
+                adhClient.DataViews.deleteDataView(namespaceId, sampleDataViewId);
             } catch (Exception e) {
                 e.printStackTrace();
                 success = false;
             }
             if (needData) {
-                cleanUp(ocsClient);
+                cleanUp(adhClient);
             }
         }
         return success;
     }
 
-    private static void createData(OCSClient ocsClient) throws Exception {
+    private static void createData(ADHClient adhClient) throws Exception {
         try {
             SdsType doubleType = new SdsType("doubleType", "", "", SdsTypeCode.Double);
             SdsType dateTimeType = new SdsType("dateTimeType", "", "", SdsTypeCode.DateTime);
@@ -339,15 +339,15 @@ public class App {
                     pressureDoubleProperty, ambientTemperatureDoubleProperty, timeDateTimeProperty });
 
             System.out.println("Creating SDS Types...");
-            ocsClient.Types.createType(tenantId, namespaceId, sdsType1);
-            ocsClient.Types.createType(tenantId, namespaceId, sdsType2);
+            adhClient.Types.createType(tenantId, namespaceId, sdsType1);
+            adhClient.Types.createType(tenantId, namespaceId, sdsType2);
 
             SdsStream stream1 = new SdsStream(sampleStreamId1, sampleTypeId1, "", sampleStreamName1);
             SdsStream stream2 = new SdsStream(sampleStreamId2, sampleTypeId2, "", sampleStreamName2);
 
             System.out.println("Creating SDS Streams...");
-            ocsClient.Streams.createStream(tenantId, namespaceId, stream1);
-            ocsClient.Streams.createStream(tenantId, namespaceId, stream2);
+            adhClient.Streams.createStream(tenantId, namespaceId, stream1);
+            adhClient.Streams.createStream(tenantId, namespaceId, stream2);
 
             sampleStartTime = Instant.now().minus(Duration.ofHours(1));
             sampleEndTime = Instant.now();
@@ -371,8 +371,8 @@ public class App {
             String tVals = "[" + String.join(",", values2) + "]";
 
             System.out.println("Sending values...");
-            ocsClient.Streams.updateValues(tenantId, namespaceId, sampleStreamId1, pVals);
-            ocsClient.Streams.updateValues(tenantId, namespaceId, sampleStreamId2, tVals);
+            adhClient.Streams.updateValues(tenantId, namespaceId, sampleStreamId1, pVals);
+            adhClient.Streams.updateValues(tenantId, namespaceId, sampleStreamId2, tVals);
         } catch (Exception e) {
             printError("Error creating Sds Objects", e);
             throw e;
@@ -417,27 +417,27 @@ public class App {
         return appsettings;
     }
 
-    public static void cleanUp(OCSClient ocsClient) {
+    public static void cleanUp(ADHClient adhClient) {
         System.out.println("Deleting sample streams...");
         try {
-            ocsClient.Streams.deleteStream(tenantId, namespaceId, sampleStreamId1);
+            adhClient.Streams.deleteStream(tenantId, namespaceId, sampleStreamId1);
         } catch (Exception e) {
             e.printStackTrace();
         }
         try {
-            ocsClient.Streams.deleteStream(tenantId, namespaceId, sampleStreamId2);
+            adhClient.Streams.deleteStream(tenantId, namespaceId, sampleStreamId2);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         System.out.println("Deleting sample types...");
         try {
-            ocsClient.Types.deleteType(tenantId, namespaceId, sampleTypeId1);
+            adhClient.Types.deleteType(tenantId, namespaceId, sampleTypeId1);
         } catch (Exception e) {
             e.printStackTrace();
         }
         try {
-            ocsClient.Types.deleteType(tenantId, namespaceId, sampleTypeId2);
+            adhClient.Types.deleteType(tenantId, namespaceId, sampleTypeId2);
         } catch (Exception e) {
             e.printStackTrace();
         }
