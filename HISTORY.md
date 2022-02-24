@@ -1,5 +1,9 @@
 # Version History
 
+## 1.4.0 / 2022-02-22
+
+- Demonstrated usage of the verbosity header
+
 ## 1.3.0 / 2022-01-27
 
 - Updated for AVEVA Data Hub
