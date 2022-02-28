@@ -310,12 +310,20 @@ public class App {
             Instant default_data_end_time = default_data_start_time.plus(Duration.ofHours(1));
 
             // The values are only a pressure, keeping temperature as 0 (the default value of a non-nullable double data type)
-            String values = "[{\"time\": \"" + default_data_start_time + "\", \"pressure\": 100, \"temperature\":0},{\"time\": \"" + default_data_end_time + "\", \"pressure\": 50, \"temperature\":0}]";
+            ArrayList<String> values_array = new ArrayList<String>();
+
+            String val1 = ("{\"time\" : \"" + default_data_start_time + "\", \"pressure\": 100, \"temperature\":0}");
+            String val2 = ("{\"time\" : \"" + default_data_end_time + "\", \"pressure\": 50, \"temperature\":0}");
+            values_array.add(val1);
+            values_array.add(val2);
+
+            String values = "[" + String.join(",", values_array) + "]";
+
             adhClient.Streams.updateValues(tenantId, namespaceId, sampleStreamId1, values);
 
             System.out.println();
-            System.out.println("Data View results will not include null values written to nullable properties if the accept-verbosity header is set to non-verbose.");
-            System.out.println("The values just written include nulls for one of the properties; note the presence or absense of these values in the following outputs:");
+            System.out.println("Data View results will not include default values written to properties if the accept-verbosity header is set to non-verbose.");
+            System.out.println("The values just written to " + sampleStreamId1 + " include the default value of 0 for temperature; note the presence or absense of these values in the following outputs:");
             
             boolean verbose = true;
 
