@@ -329,7 +329,7 @@ public class App {
             verbose = false;
 
             System.out.println();
-            System.out.println("Retrieving these values in the data view with the verbosity set to false should prevent OCS from responding with default values (0, in this case)");
+            System.out.println("Retrieving these values in the data view with the verbosity set to false should prevent ADH from responding with default values (0, in this case)");
             dataViewStoredData = adhClient.DataViews.getDataViewStoredData(namespaceId, sampleDataViewId,
                 default_data_start_time.toString(), default_data_end_time.toString(), verbose).getResponse();
             System.out.println(dataViewStoredData);
