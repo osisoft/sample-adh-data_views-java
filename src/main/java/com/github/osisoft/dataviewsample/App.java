@@ -300,13 +300,56 @@ public class App {
             System.out.println(dataViewStoredData);
             assert dataViewStoredData.length() > 0 : "Error getting data view stored data";
 
+            // Step 14
+            System.out.println();
+            System.out.println("Step 13: Demonstrate accept-verbosity header usage");
+
+            System.out.println("Writing default values to one property of the stream");
+            // Keep the times in the future, guaranteeing no overlaps with existing data
+            Instant default_data_start_time = Instant.now().plus(Duration.ofHours(1));
+            Instant default_data_end_time = default_data_start_time.plus(Duration.ofHours(1));
+
+            // The values are only a pressure, keeping temperature as 0 (the default value of a non-nullable double data type)
+            ArrayList<String> values_array = new ArrayList<String>();
+
+            String val1 = ("{\"time\" : \"" + default_data_start_time + "\", \"pressure\": 100, \"temperature\":0}");
+            String val2 = ("{\"time\" : \"" + default_data_end_time + "\", \"pressure\": 50, \"temperature\":0}");
+            values_array.add(val1);
+            values_array.add(val2);
+
+            String values = "[" + String.join(",", values_array) + "]";
+
+            adhClient.Streams.updateValues(tenantId, namespaceId, sampleStreamId1, values);
+
+            System.out.println();
+            System.out.println("Data View results will not include default values written to properties if the accept-verbosity header is set to non-verbose.");
+            System.out.println("The values just written to " + sampleStreamId1 + " include the default value of 0 for temperature; note the presence or absense of these values in the following outputs:");
+            
+            boolean verbose = true;
+
+            System.out.println();
+            System.out.println("Retrieving these values in the data view with the default verbosity set to true should return default values (0, in this case)");
+            dataViewStoredData = adhClient.DataViews.getDataViewStoredData(namespaceId, sampleDataViewId,
+                default_data_start_time.toString(), default_data_end_time.toString(), verbose).getResponse();
+            System.out.println(dataViewStoredData);
+            assert dataViewStoredData.length() > 0 : "Error getting data view stored data";
+            
+            verbose = false;
+
+            System.out.println();
+            System.out.println("Retrieving these values in the data view with the verbosity set to false should prevent ADH from responding with default values (0, in this case)");
+            dataViewStoredData = adhClient.DataViews.getDataViewStoredData(namespaceId, sampleDataViewId,
+                default_data_start_time.toString(), default_data_end_time.toString(), verbose).getResponse();
+            System.out.println(dataViewStoredData);
+            assert dataViewStoredData.length() > 0 : "Error getting data view stored data";
+            
         } catch (Exception e) {
             e.printStackTrace();
             success = false;
         } finally {
-            // Step 14
+            // Step 15
             System.out.println();
-            System.out.println("Step 14: Delete sample objects from ADH");
+            System.out.println("Step 15: Delete sample objects from ADH");
             try {
                 System.out.println("Deleting data view...");
                 adhClient.DataViews.deleteDataView(namespaceId, sampleDataViewId);

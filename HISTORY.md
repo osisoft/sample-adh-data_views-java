@@ -1,5 +1,9 @@
 # Version History
 
+## 1.4.0 / 2022-02-22
+
+- Demonstrated usage of the verbosity header
+
 ## 1.3.1 / 2022-03-09
 
 - Updated repository reference in pipeline
