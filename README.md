@@ -1,6 +1,6 @@
 # Using ADH Data Views in Java
 
-**Version:** 1.4.3
+**Version:** 1.4.4
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/ADH/aveva.sample-adh-data_views-java?branchName=main)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2617&branchName=main)
 
